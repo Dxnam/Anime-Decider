@@ -1,26 +1,48 @@
-from jikan4snek import Jikan4SNEK
+import requests
+import json
 
-class Jinak():
+class Jinak:
     def __init__(self):
-        self.jikan = Jikan4SNEK()  # Initialize Jikan4SNEK instance
+        self.base_url = "https://api.jikan.moe/v4/anime"
 
-    async def getAnimeInfo(self, id):
-        try:
-            # Asynchronously fetch anime details
-            anime = await self.jikan.get(id).anime()  # Correct method based on the documentation
-            anime = anime['data']
-            animeInfo = {
-                "title": anime['title'],
-                "synopsis": anime['synopsis'],
-                "score": anime['score'],
-                "url": anime['url']
-            }
-            return animeInfo
-        except Exception as e:
-            # Handle potential errors
-            return f"An error occurred: {str(e)}"
-        
+    # Synchronous method to fetch anime by genre and save to a file
+    def get_anime_by_genre(self, genre_id, filename="anime_data.json"):
+        url = f"{self.base_url}?genres={genre_id}"
+        response = requests.get(url)
+
+        if response.status_code == 200:
+            data = response.json()
+            animes = [
+                {"title": anime['title'], "episodes": anime['episodes'], "score": anime['score']}
+                for anime in data['data']
+            ]
+
+            # Write the response to a file
+            with open(filename, 'w') as file:
+                json.dump(animes, file, indent=4)
+
+            print(f"Data saved to {filename}")
+            return animes
+        else:
+            print(f"Error: {response.status_code}")
+            return []
+
+    # Asynchronous method to fetch anime by genre
     async def search_anime_by_genre(self, genre_id):
-        # Perform the search for anime by genre
-        anime_search = await self.jikan.search('anime', genre=genre_id)
-        return anime_search
+        from aiohttp import ClientSession
+
+        url = f"{self.base_url}?genres={genre_id}"
+        async with ClientSession() as session:
+            async with session.get(url) as response:
+                if response.status == 200:
+                    return await response.json()
+                else:
+                    print(f"Error: {response.status}")
+                    return None
+
+
+# Example usage (commented out for testing in `main.py`)
+if __name__ == "__main__":
+    jinak_instance = Jinak()
+    genre_id = 37  # Replace with the desired genre ID
+    jinak_instance.get_anime_by_genre(genre_id)
