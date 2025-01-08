@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Recommendation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .anime-info {
+            text-align: center;
+        }
+
+        .anime-info img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .anime-info h2, .anime-info h3, .anime-info h4 {
+            margin: 10px 0;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Recommended Anime</h1>
+    </header>
+    <div class="container">
+        <div class="anime-info">
+            <h2>{{ anime.title }}</h2>
+            <h3>Score: {{ anime.score }}</h3>
+            <h4>Number of Episodes: {{ anime.episodes }}</h4>
+            {% if anime.image %}
+                <img src="{{ anime.image }}" alt="Anime Poster">
+            {% endif %}
+            <a href="/" class="back-link">Search Again</a>
+        </div>
+    </div>
+</body>
+</html>
