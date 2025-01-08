@@ -70,8 +70,8 @@
             <h2>{{ anime.title }}</h2>
             <h3>Score: {{ anime.score }}</h3>
             <h4>Number of Episodes: {{ anime.episodes }}</h4>
-            {% if anime.image %}
-                <img src="{{ anime.image }}" alt="Anime Poster">
+            {% if anime.image_url %}
+            <img src="{{ anime.image_url }}" alt="{{ anime.title }}" />
             {% endif %}
             <a href="/" class="back-link">Search Again</a>
         </div>
