@@ -16,12 +16,6 @@ class Jinak:
                 {"title": anime['title'], "episodes": anime['episodes'], "score": anime['score']}
                 for anime in data['data']
             ]
-
-            # Write the response to a file
-            with open(filename, 'w') as file:
-                json.dump(animes, file, indent=4)
-
-            print(f"Data saved to {filename}")
             return animes
         else:
             print(f"Error: {response.status_code}")
