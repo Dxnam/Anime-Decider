@@ -13,7 +13,7 @@ class Jinak:
         if response.status_code == 200:
             data = response.json()
             animes = [
-                {"title": anime['title'], "episodes": anime['episodes'], "score": anime['score']}
+                {"title": anime['title'], "episodes": anime['episodes'], "score": anime['score'], "image_url": anime['images']['jpg']['image_url']}
                 for anime in data['data']
             ]
             return animes
